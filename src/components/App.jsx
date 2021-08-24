@@ -1,6 +1,7 @@
-import { useState, useReducer, useEffect } from "react";
+import { useState } from "react";
 import './App.css';
 
+// "Chunk" - term often used for a part of data, let's say records 1-8 out of a total of 30
 function chunk(array) {
     const result = []
     const chunkSize = 4;
@@ -10,6 +11,7 @@ function chunk(array) {
     return result;
 }
 
+// Extracting this just makes our Component a little bit shorter and easier to read for me
 function renderRecords(chunked, page) {
     return chunked.map((setOfRecords, i) => {
         const classes = "recordChunk " + (i === page ? "active" : "");
@@ -27,7 +29,10 @@ function renderRecords(chunked, page) {
 }
 
 export default function Records() {
+    // Which "page" of the carousel are we on
     const [page, setPage] = useState(0);
+
+    // Data does not change for this demo
     const records = [
         { artist: "Tyler, the Creator", album: "Goblin 00000" },
         { artist: "Tyler, the Creator", album: "Goblin 69892" },
@@ -50,6 +55,8 @@ export default function Records() {
     const chunked = chunk(records);
     const firstPage = page > 0;
     const lastPage = page < chunked.length-1;
+
+    // For a real carousel, you might want to change the pages automatically and style the buttons / content with CSS a little...
     return (
         <div>
             {lastPage ? <button onClick={() => setPage(page + 1)}>Next</button> : <button disabled>Next</button>}
